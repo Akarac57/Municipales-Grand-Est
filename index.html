@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pronostics Municipales 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Marianne:wght@400;500;700;800&family=Spectral:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bleu:  #002395;
+  --rouge: #ED2939;
+  --blanc: #FFFFFF;
+  --bleu-l:#dce3f5;
+  --rouge-l:#fde8ea;
+  --or:    #c9920a;
+  --bg:    #f4f1eb;
+  --ink:   #1a1714;
+  --ink2:  #555;
+  --ink3:  #999;
+  --surface:#fff;
+  --border:#ddd;
+  --green: #1f7a4a;
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--ink);font-family:'Marianne','Segoe UI',sans-serif;min-height:100vh;}
+
+/* ── HEADER ── */
+header {
+  background: linear-gradient(135deg, var(--bleu) 0%, #003ab5 50%, #001d7a 100%);
+  color:#fff; padding:0;
+  border-bottom: 4px solid var(--rouge);
+  position:sticky;top:0;z-index:200;
+  box-shadow: 0 2px 20px rgba(0,35,149,.4);
+}
+.header-top {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.7rem 1.5rem; flex-wrap:wrap; gap:.5rem;
+}
+.brand {
+  display:flex;align-items:center;gap:12px;
+  font-family:'Spectral',serif;font-weight:700;font-size:1.1rem;
+  letter-spacing:-.01em;
+}
+.rf-logo {
+  display:flex;flex-direction:column;gap:2px;
+}
+.rf-stripes {
+  display:flex;width:26px;height:18px;border-radius:3px;overflow:hidden;
+  box-shadow:0 1px 4px rgba(0,0,0,.3);
+}
+.rf-stripes span{flex:1;}
+.rf-stripes span:nth-child(1){background:#002395;}
+.rf-stripes span:nth-child(2){background:#fff;}
+.rf-stripes span:nth-child(3){background:#ED2939;}
+.rf-text{font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.7);text-align:center;line-height:1;}
+.brand-sep{width:1px;height:30px;background:rgba(255,255,255,.2);}
+.brand-title{line-height:1.15;}
+.brand-title small{display:block;font-family:'Marianne',sans-serif;font-weight:400;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-top:2px;}
+
+.nav-tabs{display:flex;gap:2px;background:rgba(0,0,0,.2);border-radius:100px;padding:3px;}
+.nav-tab{font-family:'Marianne',sans-serif;font-size:.78rem;font-weight:500;padding:5px 14px;border-radius:100px;border:none;cursor:pointer;background:transparent;color:rgba(255,255,255,.7);transition:all .15s;}
+.nav-tab.active{background:#fff;color:var(--bleu);font-weight:700;}
+.nav-tab:hover:not(.active){color:#fff;background:rgba(255,255,255,.1);}
+
+.sync-bar{font-size:.68rem;color:rgba(255,255,255,.55);}
+
+/* ── PAGES ── */
+.page{display:none;max-width:860px;margin:0 auto;padding:2rem 1.5rem;animation:fu .3s ease;}
+.page.active{display:block;}
+@keyframes fu{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── ACCUEIL HERO ── */
+.hero{text-align:center;padding:2rem 1rem 1.5rem;}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(90deg,var(--bleu-l),#fff,var(--rouge-l));
+  border:1px solid var(--border);border-radius:100px;
+  padding:5px 18px;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink2);margin-bottom:1.8rem;
+}
+.hero h1{font-family:'Spectral',serif;font-size:clamp(2.2rem,6vw,3rem);font-weight:700;line-height:1.1;margin-bottom:.8rem;}
+.hero h1 em{font-style:italic;color:var(--rouge);}
+.hero p{color:var(--ink2);max-width:480px;margin:0 auto 2rem;line-height:1.7;}
+.hero-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem;text-align:left;}
+.hero-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;}
+.hero-card-icon{font-size:1.6rem;margin-bottom:.4rem;}
+.hero-card h3{font-weight:700;font-size:.88rem;margin-bottom:.25rem;}
+.hero-card p{font-size:.78rem;color:var(--ink2);line-height:1.5;}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;margin-bottom:1.1rem;}
+.card-title{font-family:'Spectral',serif;font-weight:700;font-size:1.05rem;margin-bottom:1rem;display:block;}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+
+/* ── BUTTONS ── */
+.btn{font-family:'Marianne',sans-serif;font-weight:500;border:none;cursor:pointer;border-radius:100px;display:inline-flex;align-items:center;gap:6px;transition:all .15s;}
+.btn-lg{padding:11px 26px;font-size:.95rem;}
+.btn-md{padding:8px 18px;font-size:.88rem;}
+.btn-sm{padding:5px 13px;font-size:.78rem;}
+.btn-xs{padding:3px 10px;font-size:.72rem;}
+.btn-primary{background:var(--bleu);color:#fff;}
+.btn-primary:hover{background:#001d7a;transform:translateY(-1px);}
+.btn-danger{background:var(--rouge);color:#fff;}
+.btn-danger:hover{filter:brightness(1.1);}
+.btn-success{background:var(--green);color:#fff;}
+.btn-outline{background:transparent;color:var(--ink);border:1.5px solid var(--border);}
+.btn-outline:hover{border-color:var(--ink2);}
+.btn-ghost{background:transparent;color:var(--ink2);}
+.btn-ghost:hover{background:var(--bg);}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;}
+.btn-block{width:100%;justify-content:center;border-radius:10px;padding:12px;}
+
+/* ── INPUTS ── */
+input[type=text],input[type=number],input[type=password]{font-family:'Marianne',sans-serif;font-size:.88rem;border:1.5px solid var(--border);border-radius:8px;padding:7px 11px;background:var(--bg);color:var(--ink);outline:none;transition:border .15s;width:100%;}
+input:focus{border-color:var(--bleu);background:#fff;}
+input[type=number]{text-align:right;}
+input[type=color]{width:38px;height:34px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;padding:2px;background:var(--bg);}
+label{font-size:.75rem;font-weight:600;color:var(--ink2);display:block;margin-bottom:4px;}
+
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;padding:3px 10px;border-radius:100px;}
+.b-config{background:#fef3c7;color:#92400e;}
+.b-open{background:#dcfce7;color:#166534;}
+.b-closed{background:var(--rouge-l);color:#9b1c1c;}
+.b-blue{background:var(--bleu-l);color:var(--bleu);}
+
+/* ── SEARCH BOX ── */
+.search-wrap{position:relative;}
+.search-wrap input{padding-left:2.2rem;}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:.9rem;pointer-events:none;}
+.autocomplete-list{position:absolute;top:100%;left:0;right:0;background:#fff;border:1.5px solid var(--bleu);border-top:none;border-radius:0 0 10px 10px;z-index:100;max-height:220px;overflow-y:auto;box-shadow:0 8px 20px rgba(0,35,149,.12);}
+.autocomplete-item{padding:.65rem 1rem;cursor:pointer;font-size:.88rem;border-bottom:1px solid #f0f0f0;transition:background .1s;}
+.autocomplete-item:hover,.autocomplete-item.focus{background:var(--bleu-l);}
+.autocomplete-item small{color:var(--ink3);font-size:.75rem;display:block;}
+.search-loading{padding:.65rem 1rem;font-size:.82rem;color:var(--ink3);}
+
+/* ── COMMUNE BLOCK ── */
+.commune-block{border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.9rem;overflow:hidden;}
+.commune-hdr{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.1rem;cursor:pointer;transition:background .15s;}
+.commune-hdr:hover{background:var(--bg);}
+.commune-body{padding:1.2rem;border-top:1px solid var(--border);display:none;}
+.commune-block.open .commune-body{display:block;}
+.commune-block.open .chev{transform:rotate(180deg);}
+.chev{transition:transform .2s;color:var(--ink3);}
+.commune-tag{display:inline-flex;align-items:center;gap:4px;background:var(--bleu-l);color:var(--bleu);font-size:.72rem;font-weight:600;padding:2px 8px;border-radius:100px;}
+
+/* ── CANDIDATE ROW ── */
+.cand-row{display:grid;grid-template-columns:1fr 38px auto;gap:8px;align-items:end;margin-bottom:8px;}
+.nuance-pill{font-size:.68rem;font-weight:700;padding:2px 7px;border-radius:4px;background:var(--bleu-l);color:var(--bleu);}
+
+/* ── LEADERBOARD ── */
+.lb-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 0;border-bottom:1px solid #f0ece4;}
+.lb-row:last-child{border-bottom:none;}
+.lb-rank{font-family:'Spectral',serif;font-weight:700;font-size:1.2rem;width:30px;color:var(--ink3);}
+
+/* ── PODIUM ── */
+.podium{display:grid;gap:1rem;margin-bottom:1.5rem;align-items:end;}
+.podium-card{border-radius:var(--radius);padding:1.2rem;text-align:center;border:1px solid;}
+.pod1{background:linear-gradient(135deg,#fef9e7,#fef3c7);border-color:#f59e0b;}
+.pod2{background:linear-gradient(135deg,#f0f4ff,#dce3f5);border-color:#94a3b8;}
+.pod3{background:linear-gradient(135deg,#fff7ed,#fed7aa);border-color:#fb923c;}
+
+/* ── COMPARE TABLE ── */
+.cmp-wrap{overflow-x:auto;}
+.cmp-table{width:100%;border-collapse:collapse;font-size:.82rem;}
+.cmp-table th{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:.55rem .75rem;text-align:left;border-bottom:2px solid var(--border);white-space:nowrap;}
+.cmp-table td{padding:.55rem .75rem;border-bottom:1px solid #f0ece4;vertical-align:middle;white-space:nowrap;}
+.dp{font-size:.72rem;font-weight:600;padding:2px 7px;border-radius:100px;}
+.dg{background:#dcfce7;color:#166534;}.do{background:#fef9c3;color:#854d0e;}.db{background:var(--rouge-l);color:#9b1c1c;}
+
+/* ── TAB SELECT ── */
+.tab-sel{display:flex;gap:3px;background:var(--bg);border-radius:10px;padding:3px;width:fit-content;flex-wrap:wrap;margin-bottom:1rem;}
+.tab-btn{font-family:'Marianne',sans-serif;font-size:.78rem;font-weight:500;padding:5px 12px;border-radius:7px;border:none;cursor:pointer;background:transparent;color:var(--ink2);transition:all .15s;}
+.tab-btn.active{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08);}
+
+/* ── PRONOSTIC ROW ── */
+.prono-row{display:grid;grid-template-columns:1fr 70px 28px;gap:8px;align-items:center;margin-bottom:10px;}
+.bar-wrap{height:5px;background:#f0ece4;border-radius:10px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:10px;transition:width .2s;}
+.tot-chip{font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:100px;}
+.tok{background:#dcfce7;color:#166534;}.twarn{background:var(--rouge-l);color:#9b1c1c;}.tneut{background:var(--bg);color:var(--ink3);}
+
+/* ── ALERTS ── */
+.alert{padding:.8rem 1rem;border-radius:10px;font-size:.85rem;margin-bottom:1rem;}
+.al-info{background:var(--bleu-l);color:var(--bleu);border:1px solid #b3c2e8;}
+.al-warn{background:#fef9c3;color:#854d0e;border:1px solid #fde68a;}
+.al-ok{background:#dcfce7;color:#166534;border:1px solid #bbf7d0;}
+.al-rouge{background:var(--rouge-l);color:#9b1c1c;border:1px solid #fca5a5;}
+
+/* ── LOADING ── */
+#loader{position:fixed;inset:0;background:var(--bleu);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px;}
+.loader-brand{display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff;}
+.loader-flag{display:flex;width:60px;height:40px;border-radius:5px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.loader-flag span{flex:1;}
+.loader-flag span:nth-child(1){background:#002395;}
+.loader-flag span:nth-child(2){background:#fff;}
+.loader-flag span:nth-child(3){background:#ED2939;}
+.loader-title{font-family:'Spectral',serif;font-size:1.3rem;font-weight:700;}
+.loader-sub{font-size:.8rem;opacity:.6;letter-spacing:.08em;text-transform:uppercase;}
+.spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loader-msg{color:rgba(255,255,255,.6);font-size:.82rem;}
+
+/* ── SECTION LABEL ── */
+.sec-lbl{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);border-bottom:1px solid var(--border);padding-bottom:.4rem;margin-bottom:.9rem;}
+
+/* ── EMPTY ── */
+.empty{text-align:center;padding:3rem 1rem;color:var(--ink3);}
+.empty .icon{font-size:2.5rem;margin-bottom:.75rem;}
+
+/* ── DÉCORATIONS TRICOLORES ── */
+.tristrip{height:4px;background:linear-gradient(90deg,var(--bleu) 33.3%,#fff 33.3%,#fff 66.6%,var(--rouge) 66.6%);}
+.rouge-accent{color:var(--rouge);}
+.bleu-accent{color:var(--bleu);}
+
+input[type=range]{-webkit-appearance:none;appearance:none;height:6px;border-radius:10px;background:#e5e1d8;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;cursor:pointer;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+@media(max-width:560px){
+  .header-top{padding:.6rem 1rem;}
+  .page{padding:1rem;}
+  .nav-tab{padding:4px 9px;font-size:.72rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-brand">
+    <div class="loader-flag"><span></span><span></span><span></span></div>
+    <div class="loader-title">Pronostics Municipales 2026</div>
+    <div class="loader-sub">Connexion en cours…</div>
+  </div>
+  <div class="spin"></div>
+  <div class="loader-msg" id="loader-msg">Connexion à la base de données…</div>
+</div>
+
+<!-- HEADER -->
+<header id="mainheader" style="display:none">
+  <div class="header-top">
+    <div class="brand">
+      <div class="rf-logo">
+        <div class="rf-stripes"><span></span><span></span><span></span></div>
+        <div class="rf-text">RF</div>
+      </div>
+      <div class="brand-sep"></div>
+      <div class="brand-title">
+        Pronostics Municipales 2026
+        <small>15 &amp; 22 mars 2026</small>
+      </div>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" onclick="goTo('home')">🏠 Accueil</button>
+      <button class="nav-tab" onclick="goTo('admin')">⚙️ Admin</button>
+      <button class="nav-tab" onclick="goTo('player')">🗳️ Jouer</button>
+      <button class="nav-tab" onclick="goTo('results')">🏆 Résultats</button>
+    </div>
+    <div class="sync-bar" id="syncbar"></div>
+  </div>
+  <div class="tristrip"></div>
+</header>
+
+<div id="page-home" class="page active" style="display:none"></div>
+<div id="page-admin" class="page" style="display:none"></div>
+<div id="page-player" class="page" style="display:none"></div>
+<div id="page-results" class="page" style="display:none"></div>
+
+<script>
+// ════════════════════════════════════════════════
+// CONFIG
+// ════════════════════════════════════════════════
+const API_KEY    = '$2a$10$Gwx3DESws9VK8TZeU3XBSuE9r/tm76S2ao1iZ5qmEYFO.GIgwLzy2';
+const API_BASE   = 'https://api.jsonbin.io/v3/b';
+const ADMIN_PIN  = '1334';
+const SYNC_MS    = 10000;
+const COMMUNES_URL = 'https://raw.githubusercontent.com/Akarac57/Municipales-2026/main/communes.json?v=1';
+
+const PALETTE = ['#002395','#ED2939','#2d9b47','#c9920a','#8b5cf6','#0891b2','#be185d','#374151'];
+const NUANCE_COLORS = {
+  LRN:'#1a1a2e',LFI:'#c8392b',LUG:'#e83e8c',LSOC:'#e83e8c',LVEC:'#2d9b47',
+  LRE:'#ff8c00',LRM:'#ff8c00',LREM:'#ff8c00',LUD:'#002395',LUC:'#6c3483',
+  LDVD:'#1a4f8c',LDVC:'#888',LDVG:'#e06c00',LEXG:'#8b0000',LEXD:'#1a1a2e',
+  LDIV:'#666',LFN:'#003189',LDG:'#e83e8c',LCD:'#6c3483',LCOM:'#8b0000',
+};
+function nuanceColor(n,i){ return NUANCE_COLORS[n]||PALETTE[(i||0)%PALETTE.length]; }
+
+let COMMUNES_DB = null;
+let _editing = false;
+let _editTimer = null;
+
+// ════════════════════════════════════════════════
+// JSONBIN
+// ════════════════════════════════════════════════
+let BIN_ID = null; // ID fixe — partagé par tous les appareils
+let S = null;
+let tab = 'home', adminOk = false;
+let draft = {name:'',pronostics:{}};
+let openC = null, cmpTab = 0;
+
+function defS(){ return {communes:[],players:[],status:'config',realResults:{}}; }
+
+async function apiGet(){
+  if(!BIN_ID) return null;
+  const r = await fetch(`${API_BASE}/${BIN_ID}/latest`,{headers:{'X-Master-Key':API_KEY}});
+  if(!r.ok) throw new Error('GET '+r.status);
+  return (await r.json()).record;
+}
+async function apiSet(data){
+  if(!BIN_ID){
+    const r = await fetch(API_BASE,{method:'POST',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY,'X-Bin-Private':'false'},body:JSON.stringify(data)});
+    if(!r.ok) throw new Error('POST '+r.status);
+    BIN_ID = (await r.json()).metadata.id;
+    localStorage.setItem('muni2026_bin',BIN_ID);
+    return;
+  }
+  const r = await fetch(`${API_BASE}/${BIN_ID}`,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(data)});
+  if(!r.ok) throw new Error('PUT '+r.status);
+}
+function setSyncBar(t){ const e=document.getElementById('syncbar'); if(e) e.textContent=t; }
+async function sync(){
+  if(_editing) return; // ne pas écraser pendant la saisie
+  try{ const r=await apiGet(); if(r){S=r;renderTab();setSyncBar('⟳ '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'}));} }
+  catch(e){ setSyncBar('⚠️ sync échouée'); }
+}
+async function save(){
+  try{ await apiSet(S); setSyncBar('✓ '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit',second:'2-digit'})); }
+  catch(e){ alert('Erreur de sauvegarde : '+e.message); }
+}
+
+// ════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════
+async function init(){
+  setMsg('Chargement des communes (peut prendre 5-10s)…');
+  try{
+    console.log('Chargement communes depuis:', COMMUNES_URL);
+    const r = await fetch(COMMUNES_URL, {cache:'force-cache'});
+    console.log('Réponse communes:', r.status, r.ok);
+    if(!r.ok) throw new Error('HTTP '+r.status);
+    const txt = await r.text();
+    console.log('JSON reçu, taille:', txt.length, 'chars');
+    COMMUNES_DB = JSON.parse(txt);
+    const nb = Object.keys(COMMUNES_DB).length;
+    console.log('Communes chargées:', nb);
+    setMsg('Communes chargées (' + nb + ') — connexion…');
+  }catch(e){
+    console.error('ERREUR chargement communes:', e);
+    setMsg('⚠️ Communes non chargées: ' + e.message);
+    await new Promise(r=>setTimeout(r,2000));
+  }
+
+  setMsg('Connexion à la base de données…');
+  try{ const r=await apiGet(); S=r||defS(); if(!r) await save(); }
+  catch(e){ S=defS(); try{await save();}catch(e2){} }
+  document.getElementById('loader').style.display='none';
+  document.getElementById('mainheader').style.display='block';
+  goTo('home');
+  setInterval(sync, SYNC_MS);
+}
+function setMsg(m){ const e=document.getElementById('loader-msg'); if(e) e.textContent=m; }
+
+// ════════════════════════════════════════════════
+// NAV
+// ════════════════════════════════════════════════
+function goTo(t){
+  tab=t;
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  document.querySelectorAll('.nav-tab').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+t);
+  pg.style.display='block'; setTimeout(()=>pg.classList.add('active'),10);
+  document.querySelectorAll('.nav-tab')[['home','admin','player','results'].indexOf(t)].classList.add('active');
+  renderTab(); sync();
+}
+function renderTab(){
+  if(tab==='home')    rHome();
+  if(tab==='admin')   rAdmin();
+  if(tab==='player')  rPlayer();
+  if(tab==='results') rResults();
+}
+
+// ════════════════════════════════════════════════
+// HOME
+// ════════════════════════════════════════════════
+function rHome(){
+  const el=document.getElementById('page-home');
+  const n=S.players.length, c=S.communes.length;
+  const msg = S.status==='config'
+    ? `<div class="alert al-warn">⚙️ Configuration en cours — ${c} commune${c>1?'s':''} configurée${c>1?'s':''}.</div>`
+    : S.status==='open'
+    ? `<div class="alert al-ok">✅ Paris ouverts — ${c} commune${c>1?'s':''} · ${n} joueur${n>1?'s':''} inscrit${n>1?'s':''}.</div>`
+    : `<div class="alert al-info">🔒 Paris fermés — ${n} pronostic${n>1?'s':''} enregistré${n>1?'s':''}.</div>`;
+  el.innerHTML=`<div class="hero">
+    <div class="hero-badge"><div class="rf-stripes" style="width:18px;height:12px;border-radius:2px"><span></span><span></span><span></span></div> République Française · Élections Municipales 2026</div>
+    <h1>Concours de <em>pronostics</em><br>du 1er tour</h1>
+    <p>Anticipez les résultats commune par commune, liste par liste.<br>Le pronostic le plus précis gagne !</p>
+    <div class="hero-cards">
+      ${[['⚙️','Configurer','L\'admin recherche les communes et importe les listes automatiquement.'],
+         ['🗳️','Pronostiquer','Chaque joueur saisit ses % depuis son propre appareil.'],
+         ['🏆','Résultats','Classement automatique dès que les vrais scores sont saisis.']]
+        .map(([i,t,d])=>`<div class="hero-card"><div class="hero-card-icon">${i}</div><h3>${t}</h3><p>${d}</p></div>`).join('')}
+    </div>
+    ${msg}
+    <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;margin-top:1rem">
+      <button class="btn btn-primary btn-lg" onclick="goTo('admin')">⚙️ Admin</button>
+      <button class="btn btn-outline btn-lg" onclick="goTo('player')" ${S.status!=='open'?'disabled':''}>🗳️ Je joue</button>
+      <button class="btn btn-outline btn-lg" onclick="goTo('results')">🏆 Résultats</button>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════
+// ADMIN
+// ════════════════════════════════════════════════
+function rAdmin(){
+  const el=document.getElementById('page-admin');
+  if(!adminOk){
+    el.innerHTML=`<div style="max-width:340px;margin:4rem auto">
+      <div class="card" style="text-align:center">
+        <div style="font-size:2.2rem;margin-bottom:.5rem">🔐</div>
+        <span class="card-title" style="display:block;text-align:center">Accès administrateur</span>
+        <label>Code PIN</label>
+        <input type="password" id="pininput" placeholder="••••" style="margin-bottom:.75rem;max-width:200px;margin-left:auto;margin-right:auto" onkeydown="if(event.key==='Enter')checkPin()">
+        <button class="btn btn-primary btn-block" onclick="checkPin()">Entrer</button>
+        <p style="font-size:.72rem;color:var(--ink3);margin-top:.6rem">PIN par défaut : 1234</p>
+      </div></div>`;
+    return;
+  }
+
+  const sbCls={config:'b-config',open:'b-open',closed:'b-closed'}[S.status];
+  const sbLbl={config:'⚙️ Configuration',open:'🟢 Paris ouverts',closed:'🔒 Fermé'}[S.status];
+
+  // Communes list
+  const clist = S.communes.length===0
+    ? `<div class="empty"><div class="icon">🏘️</div><p>Aucune commune.<br>Recherchez-en une ci-dessus.</p></div>`
+    : S.communes.map((com,ci)=>`
+      <div class="commune-block ${openC===ci?'open':''}" id="cb${ci}">
+        <div class="commune-hdr" onclick="toggleC(${ci})">
+          <div style="display:flex;align-items:center;gap:.75rem">
+            <div>
+              <div style="font-weight:700;font-size:.95rem">${h(com.name)}</div>
+              <div style="font-size:.75rem;color:var(--ink3);margin-top:2px">
+                <span class="commune-tag">${h(com.codeInsee||'')}</span>
+                &nbsp;${com.candidates.length} liste${com.candidates.length>1?'s':''}
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();rmC(${ci})">🗑</button>
+            <span class="chev">▾</span>
+          </div>
+        </div>
+        <div class="commune-body">
+          <div class="sec-lbl">Listes candidates</div>
+          ${com.candidates.map((c,ki)=>`
+            <div class="cand-row">
+              <div style="display:flex;align-items:center;gap:8px;font-size:.88rem;flex:1;min-width:0">
+                <span style="width:11px;height:11px;border-radius:50%;background:${c.color};flex-shrink:0;border:1px solid rgba(0,0,0,.15)"></span>
+                <div style="flex:1;min-width:0">
+                  ${c.tete?`<div style="font-size:.72rem;color:var(--ink2);font-weight:500;margin-bottom:2px">${h(c.tete)}</div>`:''}
+                  <input type="text" value="${h(c.name)}" oninput="S.communes[${ci}].candidates[${ki}].name=this.value" style="font-size:.85rem;width:100%">
+                </div>
+                ${c.nuance?`<span class="nuance-pill" style="flex-shrink:0">${h(c.nuance)}</span>`:''}
+              </div>
+              <input type="color" value="${c.color}" oninput="S.communes[${ci}].candidates[${ki}].color=this.value">
+              <button class="btn btn-ghost btn-xs" onclick="rmK(${ci},${ki})">✕</button>
+            </div>`).join('')}
+          <button class="btn btn-outline btn-sm" onclick="addK(${ci})" style="margin-top:.3rem">+ Liste</button>
+          <button class="btn btn-ghost btn-sm" onclick="saveCommune(${ci})" style="margin-top:.3rem;margin-left:.3rem">💾 Sauvegarder</button>
+        </div>
+      </div>`).join('');
+
+  // Real results form
+  let rrHtml='';
+  if(S.status==='closed'&&S.communes.length>0){
+    rrHtml=`<div class="card">
+      <span class="card-title">📥 Résultats officiels du 1er tour</span>
+      ${S.communes.map((com,ci)=>{
+        const tot=com.candidates.reduce((s,c)=>s+(parseFloat(S.realResults[`${ci}-${c.name}`])||0),0);
+        const ok=Math.abs(tot-100)<0.2;
+        return `<div style="margin-bottom:1.3rem">
+          <div class="sec-lbl">${h(com.name)} <span class="commune-tag">${h(com.codeInsee||'')}</span></div>
+          ${com.candidates.map(c=>{
+            const rval=parseFloat(S.realResults[`${ci}-${c.name}`])||0;
+            return `<div style="margin-bottom:12px">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px">
+                <span style="width:10px;height:10px;border-radius:50%;background:${c.color};flex-shrink:0;border:1px solid rgba(0,0,0,.1)"></span>
+                <div>
+                  ${c.tete?`<div style="font-size:.72rem;color:var(--ink2);font-weight:500">${h(c.tete)}</div>`:''}
+                  <div style="font-size:.85rem;font-weight:700">${h(c.name)}</div>
+                </div>
+                ${c.nuance?`<span class="nuance-pill" style="flex-shrink:0">${h(c.nuance)}</span>`:''}
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
+                <input type="number" min="0" max="100" step="0.1" value="${rval||''}" placeholder="0"
+                  oninput="S.realResults['${ci}-${j(c.name)}']=parseFloat(this.value)||0;updRealTot(${ci})"
+                  style="width:90px;font-family:inherit;font-size:1rem;font-weight:700;border:1.5px solid var(--border);border-radius:8px;padding:6px 8px;background:var(--bg);text-align:right">
+                <span style="font-size:.9rem;color:var(--ink3)">%</span>
+              </div>
+            </div>`;
+          }).join('')}
+          <div style="text-align:right;margin-top:4px">
+            <span class="tot-chip ${ok?'tok':tot===0?'tneut':'twarn'}" id="rtot${ci}">${tot.toFixed(1)}%</span>
+          </div>
+        </div>`;}).join('')}
+      <button class="btn btn-success btn-block" onclick="doSaveReal()">💾 Enregistrer les résultats</button>
+    </div>`;
+  }
+
+  el.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem;flex-wrap:wrap;gap:.75rem">
+      <div>
+        <h2 style="font-family:'Spectral',serif;font-size:1.5rem;font-weight:700">Administration</h2>
+        <p style="font-size:.82rem;color:var(--ink2);margin-top:3px">Ajoutez des communes, gérez le statut, saisissez les résultats officiels.</p>
+      </div>
+      <span class="badge ${sbCls}">${sbLbl}</span>
+    </div>
+
+    <!-- RECHERCHE COMMUNE -->
+    <div class="card">
+      <div class="card-hdr">
+        <span class="card-title" style="margin-bottom:0">📍 Ajouter une commune</span>
+      </div>
+      <div class="alert al-info" style="margin-bottom:1rem;font-size:.82rem">
+        Recherchez une commune française — les listes candidates sont importées automatiquement depuis le site du Ministère de l'Intérieur.
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="commune-search" placeholder="Ex: Lyon, Bordeaux, 69001…" oninput="onSearchInput(this.value)" autocomplete="off">
+        <div class="autocomplete-list" id="autocomplete-list" style="display:none"></div>
+      </div>
+      <div id="import-status" style="margin-top:.75rem"></div>
+    </div>
+
+    <!-- COMMUNES CONFIGURÉES -->
+    <div class="card">
+      <div class="card-hdr">
+        <span class="card-title" style="margin-bottom:0">🏘️ Communes du concours (${S.communes.length})</span>
+      </div>
+      ${clist}
+    </div>
+
+    <!-- STATUT -->
+    <div class="card">
+      <span class="card-title">🔐 Statut du concours</span>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" onclick="setStatus('config')">🔧 Configuration</button>
+        <button class="btn btn-success btn-sm" onclick="setStatus('open')">✅ Ouvrir les paris</button>
+        <button class="btn btn-danger btn-sm" onclick="setStatus('closed')">🔒 Fermer les paris</button>
+      </div>
+      <p style="font-size:.75rem;color:var(--ink3);margin-top:.6rem">Fermez les paris avant le scrutin pour bloquer les modifications.</p>
+    </div>
+
+    ${rrHtml}
+
+    <!-- JOUEURS -->
+    <div class="card">
+      <div class="card-hdr">
+        <span class="card-title" style="margin-bottom:0">👥 Joueurs (${S.players.length})</span>
+        <button class="btn btn-ghost btn-sm" onclick="clrP()">🗑 Tout effacer</button>
+      </div>
+      ${S.players.length===0
+        ? '<p style="font-size:.82rem;color:var(--ink3)">Aucun joueur inscrit.</p>'
+        : S.players.map((p,i)=>`<div class="lb-row">
+            <span style="font-weight:500">${h(p.name)}</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-size:.75rem;color:var(--ink3)">${Object.keys(p.pronostics||{}).length} saisies</span>
+              <button class="btn btn-ghost btn-xs" onclick="rmP(${i})">🗑</button>
+            </div></div>`).join('')}
+    </div>
+
+    <!-- DANGER -->
+    <div class="card" style="border-color:#fca5a5">
+      <span class="card-title" style="color:var(--rouge)">⚠️ Zone de danger</span>
+      <button class="btn btn-danger btn-md" onclick="doReset()">🗑 Tout réinitialiser</button>
+    </div>`;
+}
+
+// ── Autocomplete commune ──────────────────
+let searchTimer = null;
+
+function onSearchInput(val){
+  clearTimeout(searchTimer);
+  const list=document.getElementById('autocomplete-list');
+  if(val.length<2){ list.style.display='none'; return; }
+  list.style.display='block';
+
+  if(!COMMUNES_DB){
+    console.error('COMMUNES_DB est null lors de la recherche');
+    list.innerHTML='<div class="search-loading" style="color:var(--rouge)">❌ Base de données non chargée — rechargez la page.</div>';
+    return;
+  }
+
+  const nb = Object.keys(COMMUNES_DB).length;
+  console.log('Recherche dans', nb, 'communes pour:', val);
+  list.innerHTML='<div class="search-loading">🔍 Recherche…</div>';
+  searchTimer=setTimeout(()=>searchCommunes(val), 250);
+}
+
+let _searchResults = []; // index en mémoire, évite les problèmes d'encodage dans onclick
+
+function searchCommunes(q){
+  const list=document.getElementById('autocomplete-list');
+  const qn=q.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+  const results=[];
+  for(const [code, data] of Object.entries(COMMUNES_DB)){
+    const nomN=data[0].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+    if(nomN.startsWith(qn) || code.startsWith(q)){
+      results.push({code, name:data[0], dept:data[1], listes:data[2]});
+      if(results.length>=12) break;
+    }
+  }
+  if(results.length<5){
+    for(const [code, data] of Object.entries(COMMUNES_DB)){
+      if(results.find(r=>r.code===code)) continue;
+      const nomN=data[0].toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'');
+      if(nomN.includes(qn)){
+        results.push({code, name:data[0], dept:data[1], listes:data[2]});
+        if(results.length>=12) break;
+      }
+    }
+  }
+  if(!results.length){ list.innerHTML='<div class="search-loading">Aucun résultat</div>'; return; }
+  _searchResults = results; // stocker en mémoire
+  list.innerHTML=results.map((c,i)=>`
+    <div class="autocomplete-item" onclick="pickCommune(${i})">
+      <strong>${h(c.name)}</strong>
+      <small>INSEE ${c.code} · Dép. ${c.dept} · ${c.listes.length} liste${c.listes.length>1?'s':''}</small>
+    </div>`).join('');
+}
+
+function pickCommune(i){
+  const d = _searchResults[i];
+  if(!d){ console.error('pickCommune: index introuvable', i); return; }
+  document.getElementById('autocomplete-list').style.display='none';
+  document.getElementById('commune-search').value='';
+
+  if(S.communes.find(c=>c.codeInsee===d.code)){
+    document.getElementById('import-status').innerHTML=`<div class="alert al-warn">⚠️ <strong>${h(d.name)}</strong> est déjà dans le concours.</div>`;
+    return;
+  }
+
+  // Construire les candidats depuis la DB
+  const candidates = d.listes.map((l,i)=>({
+    name: l[0],
+    nuance: l[1],
+    color: nuanceColor(l[1], i),
+    tete: l[3]||''
+  }));
+
+  S.communes.push({ name:d.name, codeInsee:d.code, codeDept:d.dept, candidates });
+
+  const nb=candidates.length;
+  document.getElementById('import-status').innerHTML=`<div class="alert al-ok">
+    ✅ <strong>${h(d.name)}</strong> ajoutée — ${nb} liste${nb>1?'s':''} importée${nb>1?'s':''}${nb?` (${candidates.map(c=>h(c.nuance||'DIV')).join(', ')})`:''}.
+  </div>`;
+
+  openC=S.communes.length-1;
+  save().then(()=>rAdmin());
+}
+
+function pauseSync(){
+  _editing=true;
+  clearTimeout(_editTimer);
+  _editTimer=setTimeout(()=>{ _editing=false; }, 3000); // reprend 3s après la dernière frappe
+}
+function updRealTot(ci){
+  pauseSync();
+  const com=S.communes[ci];
+  if(!com) return;
+  const tot=com.candidates.reduce((s,c)=>s+(parseFloat(S.realResults[`${ci}-${c.name}`])||0),0);
+  const chip=document.getElementById('rtot'+ci);
+  if(chip){ const ok=Math.abs(tot-100)<0.2; chip.className='tot-chip '+(ok?'tok':tot===0?'tneut':'twarn'); chip.textContent=tot.toFixed(1)+'%'; }
+}
+async function saveCommune(ci){ await save(); const s=document.getElementById('import-status'); if(s) s.innerHTML=`<div class="alert al-ok">✓ Sauvegardé</div>`; }
+function checkPin(){ if(document.getElementById('pininput').value===ADMIN_PIN){adminOk=true;rAdmin();}else alert('PIN incorrect.'); }
+function toggleC(ci){ openC=openC===ci?null:ci; rAdmin(); }
+async function rmC(ci){ if(!confirm('Supprimer cette commune ?'))return; S.communes.splice(ci,1); openC=null; await save(); rAdmin(); }
+const COLORS=['#002395','#ED2939','#2d9b47','#c9920a','#8b5cf6','#0891b2','#be185d','#374151'];
+async function addK(ci){ S.communes[ci].candidates.push({name:'Nouvelle liste',nuance:'',color:COLORS[S.communes[ci].candidates.length%COLORS.length]}); await save(); rAdmin(); }
+async function rmK(ci,ki){ S.communes[ci].candidates.splice(ki,1); await save(); rAdmin(); }
+async function setStatus(s){ S.status=s; await save(); rAdmin(); rHome(); }
+async function doSaveReal(){ await save(); alert('✅ Résultats enregistrés !'); }
+async function rmP(i){ S.players.splice(i,1); await save(); rAdmin(); }
+async function clrP(){ if(!confirm('Effacer tous les joueurs ?'))return; S.players=[]; await save(); rAdmin(); }
+async function doReset(){ if(!confirm('⚠️ Réinitialiser TOUT ? Irréversible.'))return; S=defS(); await save(); rAdmin(); rHome(); }
+
+// ════════════════════════════════════════════════
+// PLAYER
+// ════════════════════════════════════════════════
+function rPlayer(){
+  const el=document.getElementById('page-player');
+  if(S.communes.length===0){el.innerHTML=empty('⚙️','L\'admin n\'a pas encore configuré les communes.');return;}
+  if(S.status==='config'){el.innerHTML=empty('🔧','Le concours n\'est pas encore ouvert. Revenez bientôt !');return;}
+  if(S.status==='closed'){el.innerHTML=empty('🔒','Les paris sont fermés.<br><a href="#" onclick="goTo(\'results\');return false" style="color:var(--bleu)">Voir les résultats →</a>');return;}
+  const communes=S.communes.map((com,ci)=>{
+    const tot=com.candidates.reduce((s,c)=>s+(draft.pronostics[`${ci}-${c.name}`]||0),0);
+    const ok=Math.abs(tot-100)<0.2;
+    return `<div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.9rem">
+        <div>
+          <div style="font-weight:700;font-size:1rem">📍 ${h(com.name||`Commune ${ci+1}`)}</div>
+          <span class="commune-tag" style="margin-top:4px">${h(com.codeInsee||'')}</span>
+        </div>
+        <span class="tot-chip ${ok?'tok':tot===0?'tneut':'twarn'}" id="tot${ci}">${ok?'✓ 100%':tot.toFixed(1)+'%'}</span>
+      </div>
+      ${com.candidates.map(cand=>{
+        const val=draft.pronostics[`${ci}-${cand.name}`]||0;
+        return `<div style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:5px">
+            <span style="width:10px;height:10px;border-radius:50%;background:${cand.color};flex-shrink:0;border:1px solid rgba(0,0,0,.1)"></span>
+            <div style="min-width:0">
+              ${cand.tete?`<div style="font-size:.78rem;color:var(--ink2);font-weight:500">${h(cand.tete)}</div>`:''}
+              <div style="font-size:.85rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h(cand.name)}</div>
+            </div>
+            ${cand.nuance?`<span class="nuance-pill" style="flex-shrink:0">${h(cand.nuance)}</span>`:''}
+          </div>
+          <div style="display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center">
+            <input type="range" min="0" max="100" step="0.5" value="${val||0}"
+              oninput="upP(${ci},'${j(cand.name)}',this.value);this.nextElementSibling.value=parseFloat(this.value).toFixed(1)"
+              style="width:100%;accent-color:${cand.color};cursor:pointer">
+            <input type="number" min="0" max="100" step="0.5" value="${val||''}" placeholder="0"
+              oninput="upP(${ci},'${j(cand.name)}',this.value)" onchange="this.previousElementSibling.value=parseFloat(this.value)||0"
+              style="width:64px;font-family:inherit;font-size:.88rem;border:1.5px solid var(--border);border-radius:8px;padding:5px 7px;background:var(--bg);text-align:right">
+            <span style="font-size:.82rem;color:var(--ink3)">%</span>
+          </div>
+          <div class="bar-wrap" style="margin-top:4px"><div class="bar-fill" id="bar${ci}_${eid(cand.name)}" style="background:${cand.color};width:${Math.min(100,val)}%"></div></div>
+        </div>`;}).join('')}
+    </div>`;}).join('');
+  el.innerHTML=`
+    <h2 style="font-family:'Spectral',serif;font-size:1.5rem;font-weight:700;margin-bottom:1.3rem">🗳️ Mes pronostics</h2>
+    <div class="card">
+      <label>Votre prénom</label>
+      <input type="text" id="pname" placeholder="Ex: Sophie" value="${h(draft.name)}" oninput="draft.name=this.value" style="max-width:280px">
+    </div>
+    ${communes}
+    <button class="btn btn-primary btn-block btn-lg" onclick="submitP()">✅ Valider mes pronostics</button>`;
+}
+
+function upP(ci,name,val){
+  pauseSync();
+  draft.pronostics[`${ci}-${name}`]=parseFloat(val)||0;
+  const bar=document.getElementById(`bar${ci}_${eid(name)}`);
+  if(bar) bar.style.width=Math.min(100,parseFloat(val)||0)+'%';
+  const com=S.communes[ci];
+  const tot=com.candidates.reduce((s,c)=>s+(draft.pronostics[`${ci}-${c.name}`]||0),0);
+  const chip=document.getElementById('tot'+ci);
+  if(chip){ const ok=Math.abs(tot-100)<0.2; chip.className='tot-chip '+(ok?'tok':tot===0?'tneut':'twarn'); chip.textContent=ok?'✓ 100%':tot.toFixed(1)+'%'; }
+}
+
+async function submitP(){
+  const name=(document.getElementById('pname')?.value||draft.name).trim();
+  if(!name){alert('Entrez votre prénom !');return;}
+  for(let ci=0;ci<S.communes.length;ci++){
+    const com=S.communes[ci];
+    const tot=com.candidates.reduce((s,c)=>s+(draft.pronostics[`${ci}-${c.name}`]||0),0);
+    if(Math.abs(tot-100)>0.5){alert(`Total pour "${com.name||'Commune '+(ci+1)}" doit être 100% (${tot.toFixed(1)}% actuellement).`);return;}
+  }
+  await sync();
+  const ex=S.players.findIndex(p=>p.name.toLowerCase()===name.toLowerCase());
+  const entry={name,pronostics:{...draft.pronostics}};
+  if(ex>=0){if(!confirm(`"${name}" existe déjà. Remplacer ses pronostics ?`))return; S.players[ex]=entry;}
+  else S.players.push(entry);
+  await save();
+  draft={name:'',pronostics:{}};
+  document.getElementById('page-player').innerHTML=empty('✅',`Merci <strong>${h(name)}</strong> !<br>Pronostics enregistrés. Bonne chance !`);
+}
+
+// ════════════════════════════════════════════════
+// RESULTS
+// ════════════════════════════════════════════════
+function calcScore(player){
+  let e=0,n=0;
+  S.communes.forEach((com,ci)=>{ com.candidates.forEach(c=>{ const k=`${ci}-${c.name}`; e+=Math.abs((parseFloat(S.realResults[k])||0)-(parseFloat(player.pronostics?.[k])||0)); n++; }); });
+  return n===0?0:Math.max(0,Math.round((100-e/n)*10)/10);
+}
+
+function rResults(){
+  const el=document.getElementById('page-results');
+  const hasR=Object.keys(S.realResults).length>0;
+  if(S.players.length===0){el.innerHTML=empty('👥','Aucun joueur inscrit pour l\'instant.');return;}
+
+  const ranked=[...S.players].map(p=>({...p,score:hasR?calcScore(p):null})).sort((a,b)=>(b.score||0)-(a.score||0));
+
+  // ── PODIUM ──
+  let podHtml='';
+  if(hasR && ranked.length>=1){
+    const medals=['🥇','🥈','🥉'];
+    const bgColors=['linear-gradient(135deg,#fef9e7,#fef3c7)','linear-gradient(135deg,#f0f4ff,#dce3f5)','linear-gradient(135deg,#fff7ed,#fed7aa)'];
+    const borders=['#f59e0b','#94a3b8','#fb923c'];
+    // Ordre visuel: 2e - 1er - 3e (podium classique)
+    const podOrder = ranked.length>=3 ? [1,0,2] : ranked.map((_,i)=>i);
+    const heights = ranked.length>=3 ? ['80px','110px','60px'] : ['110px','80px','60px'];
+    podHtml=`
+    <div style="display:flex;align-items:flex-end;justify-content:center;gap:8px;margin-bottom:1.5rem">
+      ${podOrder.map((ri,vi)=>{
+        const p=ranked[ri];
+        if(!p) return '';
+        return `<div style="flex:1;max-width:140px;background:${bgColors[ri]};border:2px solid ${borders[ri]};border-radius:12px;padding:12px 8px;text-align:center;min-height:${heights[vi]}">
+          <div style="font-size:1.8rem;line-height:1">${medals[ri]}</div>
+          <div style="font-family:'Spectral',serif;font-weight:700;font-size:.95rem;margin:6px 0 2px;word-break:break-word">${h(p.name)}</div>
+          <div style="font-size:1.1rem;font-weight:800;color:${ri===0?'#c9920a':ri===1?'#64748b':'#ea580c'}">${p.score}</div>
+          <div style="font-size:.65rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em">pts</div>
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  // ── CLASSEMENT ──
+  const lbHtml=`<div class="card" style="margin-bottom:1.3rem">
+    <span class="card-title">🏆 Classement</span>
+    ${ranked.map((p,i)=>{
+      const scoreDetail = hasR ? S.communes.map((com,ci)=>{
+        const e=com.candidates.reduce((s,c)=>s+Math.abs((parseFloat(S.realResults[`${ci}-${c.name}`])||0)-(parseFloat(p.pronostics?.[`${ci}-${c.name}`])||0)),0);
+        return `<span style="white-space:nowrap">${h(com.name||'C'+(ci+1))}&nbsp;<strong>±${e.toFixed(1)}pt</strong></span>`;
+      }).join('<span style="color:var(--border);margin:0 4px">·</span>') : '';
+      const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+      return `<div style="display:flex;align-items:center;gap:12px;padding:.8rem 0;border-bottom:1px solid #f0ece4">
+        <div style="font-family:'Spectral',serif;font-weight:700;font-size:1.4rem;width:36px;text-align:center;flex-shrink:0;color:${i<3?['#c9920a','#64748b','#ea580c'][i]:'var(--ink3)'}">
+          ${medal||i+1}
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:700;font-size:.95rem">${h(p.name)}</div>
+          ${hasR?`<div style="font-size:.72rem;color:var(--ink3);margin-top:3px;display:flex;flex-wrap:wrap;gap:4px">${scoreDetail}</div>`:''}
+        </div>
+        ${hasR
+          ?`<div style="text-align:right;flex-shrink:0">
+              <div style="font-family:'Spectral',serif;font-weight:800;font-size:1.3rem;color:var(--bleu)">${p.score}</div>
+              <div style="font-size:.65rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.06em">pts</div>
+            </div>`
+          :`<span style="font-size:.75rem;color:var(--ink3);flex-shrink:0">En attente</span>`
+        }
+      </div>`;
+    }).join('')}
+  </div>`;
+
+  // ── COMPARAISON PAR COMMUNE ──
+  let cmpHtml='';
+  if(hasR && S.communes.length>0){
+    if(cmpTab>=S.communes.length) cmpTab=0;
+    const com=S.communes[cmpTab];
+
+    // Onglets communes
+    const tabs=S.communes.map((c,ci)=>`
+      <button class="tab-btn ${ci===cmpTab?'active':''}" onclick="cmpTab=${ci};rResults()">
+        ${h(c.name||'C'+(ci+1))}
+      </button>`).join('');
+
+    // Cartes par liste (mobile-friendly, pas de tableau)
+    const cards=com.candidates.map(cand=>{
+      const real=parseFloat(S.realResults[`${cmpTab}-${cand.name}`])||0;
+      const barReal=Math.min(100,real);
+      return `<div style="border:1px solid var(--border);border-radius:10px;padding:1rem;margin-bottom:.75rem">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:.75rem">
+          <span style="width:12px;height:12px;border-radius:50%;background:${cand.color};flex-shrink:0;border:1px solid rgba(0,0,0,.1)"></span>
+          <div style="flex:1;min-width:0">
+            ${cand.tete?`<div style="font-size:.72rem;color:var(--ink2);font-weight:500">${h(cand.tete)}</div>`:''}
+            <div style="font-weight:700;font-size:.88rem">${h(cand.name)}</div>
+          </div>
+          ${cand.nuance?`<span class="nuance-pill">${h(cand.nuance)}</span>`:''}
+        </div>
+        <!-- Résultat réel -->
+        <div style="margin-bottom:.6rem">
+          <div style="display:flex;justify-content:space-between;font-size:.72rem;color:var(--ink3);margin-bottom:3px">
+            <span>Résultat officiel</span><strong style="color:var(--ink)">${real.toFixed(1)}%</strong>
+          </div>
+          <div style="height:8px;background:#f0ece4;border-radius:10px;overflow:hidden">
+            <div style="height:100%;width:${barReal}%;background:${cand.color};border-radius:10px"></div>
+          </div>
+        </div>
+        <!-- Pronostics joueurs -->
+        ${ranked.map(p=>{
+          const pr=parseFloat(p.pronostics?.[`${cmpTab}-${cand.name}`])||0;
+          const d=Math.abs(real-pr);
+          const dcls=d<2?'dg':d<5?'do':'db';
+          return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <div style="font-size:.78rem;font-weight:500;width:80px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h(p.name)}</div>
+            <div style="flex:1;height:5px;background:#f0ece4;border-radius:10px;overflow:hidden">
+              <div style="height:100%;width:${Math.min(100,pr)}%;background:${cand.color};opacity:.5;border-radius:10px"></div>
+            </div>
+            <div style="font-size:.78rem;width:36px;text-align:right;flex-shrink:0">${pr.toFixed(1)}%</div>
+            <span class="dp ${dcls}" style="flex-shrink:0">±${d.toFixed(1)}</span>
+          </div>`;
+        }).join('')}
+      </div>`;
+    }).join('');
+
+    cmpHtml=`<div class="card">
+      <span class="card-title">📊 Pronostic vs Réalité</span>
+      <div class="tab-sel" style="margin-bottom:1rem">${tabs}</div>
+      ${cards}
+    </div>`;
+  }
+
+  el.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.3rem;flex-wrap:wrap;gap:.75rem">
+      <h2 style="font-family:'Spectral',serif;font-size:1.5rem;font-weight:700">Résultats</h2>
+      ${!hasR?'<span class="badge b-config">⏳ Résultats officiels non encore saisis</span>':''}
+    </div>
+    ${podHtml}${lbHtml}${cmpHtml}`;
+}
+
+// ════════════════════════════════════════════════
+// UTILS
+// ════════════════════════════════════════════════
+function h(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function j(s){return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+function eid(s){return String(s||'').replace(/[^a-zA-Z0-9]/g,'_');}
+function empty(icon,txt){return`<div class="empty"><div class="icon">${icon}</div><p>${txt}</p></div>`;}
+
+// Ferme autocomplete si clic ailleurs
+document.addEventListener('click',e=>{
+  const l=document.getElementById('autocomplete-list');
+  if(l&&!e.target.closest('.search-wrap')) l.style.display='none';
+});
+
+init();
+</script>
+</body>
+</html>
